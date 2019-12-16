@@ -17,8 +17,6 @@ function App() {
           .then(response=> response.json())
           .then(setComplexPackage), 300); // just to show the waiting gif
     }, []);
-
-  console.log(complexPackage);
   
   return (
     <div className="App">
