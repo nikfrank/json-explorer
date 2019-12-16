@@ -3,11 +3,13 @@ import waitingGif from './waiting.gif';
 import './App.css';
 
 import PackageExplorer from './PackageExplorer';
+import serializePackageJson from './serializePackageJson';
 
 function App() {
 
-  const [ complexPackage, setComplexPackage ] = useState(null);
-
+  const [ complexPackage, setComplexPackage ] = useState( null );
+  const [ isResolved, setIsResolved ] = useState( false );
+  
   useEffect(
     ()=> {
       setTimeout(()=>
@@ -24,9 +26,18 @@ function App() {
         { !complexPackage ? (
             <img src={waitingGif} alt='waiting' className='App-waiting' />
         ) : (
-            <PackageExplorer pack={complexPackage} />
+            <PackageExplorer pack={
+              isResolved ? ({
+                name: complexPackage.name,
+                version: complexPackage.version,
+                dependencies: serializePackageJson(complexPackage)
+              }) : (
+                complexPackage
+              )
+            } />
         )}
       </header>
+      <button onClick={()=> setIsResolved(!isResolved)}>Toggle</button>
     </div>
   );
 }
