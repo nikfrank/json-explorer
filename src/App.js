@@ -1,23 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import waitingGif from './waiting.gif';
 import './App.css';
 
+import PackageExplorer from './PackageExplorer';
+
 function App() {
+
+  const [ complexPackage, setComplexPackage ] = useState(null);
+
+  useEffect(
+    ()=> {
+      setTimeout(()=>
+        fetch('/complex-package.json', {
+          headers: { 'Content-Type': 'application/json' }
+        })
+          .then(response=> response.json())
+          .then(setComplexPackage), 300); // just to show the waiting gif
+    }, []);
+
+  console.log(complexPackage);
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <header className="App-header">
+    { !complexPackage ? (
+      <img src={waitingGif} alt='waiting' className='App-waiting' />
+    ) : (
+      <>
+        <PackageExplorer pack={complexPackage} />
+      </>
+    )}
       </header>
     </div>
   );
