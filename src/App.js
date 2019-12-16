@@ -20,14 +20,14 @@ function App() {
   
   return (
     <div className="App">
-    <header className="App-header">
-    { !complexPackage ? (
-      <img src={waitingGif} alt='waiting' className='App-waiting' />
-    ) : (
-      <>
-        <PackageExplorer pack={complexPackage} />
-      </>
-    )}
+      <header className="App-header">
+        { !complexPackage ? (
+            <img src={waitingGif} alt='waiting' className='App-waiting' />
+        ) : (
+            <>
+              <PackageExplorer pack={complexPackage} />
+            </>
+        )}
       </header>
     </div>
   );
